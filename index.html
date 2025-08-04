@@ -23,87 +23,74 @@
       border: 2px solid #ccc;
       border-radius: 8px;
       font-size: 1.2rem;
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
 
 <h1>Bear Ninja Hunter</h1>
-<p id="demo">Welcome to the ultimate showdown!</p>
+<p id="demo">Let’s play!</p>
 
 <script>
-  // Store game options
   const choices = ["bear", "ninja", "hunter"];
-
-  // Prompt for user name once
-  let userName = prompt("Welcome to Bear Ninja Hunter. Please enter your name:");
-  if (!userName) {
-    alert("Game cancelled. Please reload and enter your name next time.");
-    document.getElementById("demo").innerHTML = "Game cancelled.";
-    throw new Error("User cancelled game at name prompt.");
-  }
-
-  alert("Welcome, " + userName + "! Let's begin the game!");
+  const symbols = {
+    bear: "🐻",
+    ninja: "🥷",
+    hunter: "🧑‍🌾"
+  };
 
   let playAgain = true;
 
   while (playAgain) {
-    // Prompt for player choice
-    let userChoice = prompt("Choose your fighter: Bear 🐻, Ninja 🥷, or Hunter 🧑‍🌾");
-
-    // Check for cancelled input
-    if (userChoice === null || userChoice.trim() === "") {
-      alert("❌ Invalid input. You must enter Bear, Ninja, or Hunter.");
+    let userName = prompt("Welcome to Bear Ninja Hunter! What's your name?");
+    if (!userName) {
+      alert("Game cancelled. Name is required.");
       break;
     }
 
-    // Standardize input to lowercase
-    userChoice = userChoice.trim().toLowerCase();
-
-    // Validate input
-    if (!choices.includes(userChoice)) {
-      alert("❌ Invalid choice: '" + userChoice + "'. Please enter Bear, Ninja, or Hunter (case insensitive).");
+    let userInput = prompt("Choose your fighter: Bear, Ninja, or Hunter");
+    if (!userInput) {
+      alert("No input received. Ending game.");
       break;
     }
 
-    // Randomize computer choice
-    let compIndex = Math.floor(Math.random() * choices.length);
-    let computerChoice = choices[compIndex];
+    let playerChoice = userInput.trim().toLowerCase();
+    if (!choices.includes(playerChoice)) {
+      alert("Invalid choice: " + playerChoice);
+      break;
+    }
 
-    // Determine winner message
+    let computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
     let winnerMessage = "";
-    if (userChoice === computerChoice) {
+    if (playerChoice === computerChoice) {
       winnerMessage = "It's a tie!";
     } else if (
-      (userChoice === "bear" && computerChoice === "ninja") ||
-      (userChoice === "ninja" && computerChoice === "hunter") ||
-      (userChoice === "hunter" && computerChoice === "bear")
+      (playerChoice === "bear" && computerChoice === "ninja") ||
+      (playerChoice === "ninja" && computerChoice === "hunter") ||
+      (playerChoice === "hunter" && computerChoice === "bear")
     ) {
-      winnerMessage = "🎉 You win!";
+      winnerMessage = `🎉 ${userName}, you win!`;
     } else {
       winnerMessage = "💻 Computer wins!";
     }
 
-    // Add emoji for flair
-    let symbols = {
-      bear: "🐻",
-      ninja: "🥷",
-      hunter: "🧑‍🌾"
-    };
+    // Build multi-line message
+    let finalMessage = `
+Hello ${userName}!
+You chose: ${playerChoice} ${symbols[playerChoice]}
+Computer chose: ${computerChoice} ${symbols[computerChoice]}
+${winnerMessage}
+`;
 
-    // Concatenate final message
-    let resultText = "Hello " + userName + "! You chose: " + userChoice + " " + symbols[userChoice] +
-                     ". Computer chose: " + computerChoice + " " + symbols[computerChoice] +
-                     ". Result: " + winnerMessage;
+    // Display in HTML and console
+    document.getElementById("demo").innerHTML = finalMessage.replace(/\n/g, "<br>");
+    console.log(finalMessage);
 
-    // Output in two ways
-    document.getElementById("demo").innerHTML = resultText;
-    console.log(resultText);
-
-    // Ask if user wants to play again
-    let again = prompt("Do you want to play again? (yes or no)");
+    let again = prompt("Play again? (yes/no)");
     if (!again || again.toLowerCase() !== "yes") {
-      alert("Thanks for playing, " + userName + "! See you next time.");
+      alert(`Thanks for playing, ${userName}! 👋`);
       playAgain = false;
     }
   }
@@ -111,5 +98,3 @@
 
 </body>
 </html>
-
-
