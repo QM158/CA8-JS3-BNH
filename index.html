@@ -110,7 +110,7 @@ ${result}`;
     console.log(message);
 
     // Ask if player wants to play again
-    let playAgain = prompt("${playerName} would you like to play again, Yes or No?");
+    let playAgain = prompt(playerName + " would you like to play again, Yes or No?");
     if (playAgain === null || playAgain.trim().toLowerCase() !== "yes") {
       alert("Thanks for playing, " + playerName + "! 👋");
       keepPlaying = false;
