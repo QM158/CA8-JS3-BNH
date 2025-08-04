@@ -47,17 +47,17 @@
 
   while (keepPlaying) {
     // Ask for player's name
-    let playerName = prompt("Welcome to Bear Ninja Hunter! What's your name?");
+    let playerName = prompt("Welcome to Bear Ninja Hunter! Please enter your name to get started:");
     if (playerName === null || playerName.trim() === "") {
       alert("You must enter a name to play. Please refresh the page to try again.");
       break;
     }
 
     // Greet the player
-    alert("Hello " + playerName + "! Let's begin.");
+    alert("Hi " + playerName + " Let's Play!!");
 
     // Ask for player's choice
-    let playerInput = prompt("Choose your fighter: Bear, Ninja, or Hunter");
+    let playerInput = prompt("Who are you: Bear, Ninja, or Hunter?");
     if (playerInput === null || playerInput.trim() === "") {
       alert("You didn't choose a fighter. Please refresh the page to try again.");
       break;
@@ -94,16 +94,15 @@
       (playerChoice === "ninja" && computerChoice === "hunter") ||
       (playerChoice === "hunter" && computerChoice === "bear")
     ) {
-      result = "🎉 " + playerName + ", you win!";
+      result = "You win!!";
     } else {
-      result = "💻 Computer wins!";
+      result = "Computer wins!!";
     }
 
     // Build the result message
     let message = 
-`Hello ${playerName}!
-You chose: ${playerChoice} ${emojis[playerChoice]}
-Computer chose: ${computerChoice} ${emojis[computerChoice]}
+`${playerName} you chose ${playerChoice} ${emojis[playerChoice]}!
+The computer chose ${computerChoice} ${emojis[computerChoice]}!!
 ${result}`;
 
     // Show results on page and in console
@@ -111,7 +110,7 @@ ${result}`;
     console.log(message);
 
     // Ask if player wants to play again
-    let playAgain = prompt("Would you like to play again? (yes/no)");
+    let playAgain = prompt("${playerName} would you like to play again, Yes or No?");
     if (playAgain === null || playAgain.trim().toLowerCase() !== "yes") {
       alert("Thanks for playing, " + playerName + "! 👋");
       keepPlaying = false;
