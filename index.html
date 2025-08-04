@@ -87,6 +87,7 @@ ${winnerMessage}
     // Display in HTML and console
     document.getElementById("demo").innerHTML = finalMessage.replace(/\n/g, "<br>");
     console.log(finalMessage);
+    alert(finalMessage);
 
     let again = prompt("Play again? (yes/no)");
     if (!again || again.toLowerCase() !== "yes") {
