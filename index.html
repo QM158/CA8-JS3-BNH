@@ -34,46 +34,49 @@
 <p id="output">Let's play!</p>
 
 <script>
-  // DECLARE ALL VARIABLES AT TOP
-  const gameChoices = ["bear", "ninja", "hunter"]; // Immutable array of choices
+  // These are the three characters you can choose
+  const gameChoices = ["bear", "ninja", "hunter"];
+
+  // These are the pictures (emojis) for each character
   const emojiMap = {
     bear: "🐻",
     ninja: "🥷",
     hunter: "🧑‍🌾"
   };
 
-  let playGame = true; // Loop control
+  // This keeps the game going until you choose to stop
+  let playGame = true;
 
-  // MAIN GAME LOOP
+  // This is the main part of the game
   while (playGame) {
-    // Get player name
+    // Ask the player for their name
     let playerName = prompt("Welcome to Bear Ninja Hunter! What's your name?");
     if (!playerName) {
-      alert("Game cancelled. You must enter a name.");
+      alert("You need to enter a name to play.");
       break;
     }
 
-    // Ask user to pick a fighter
+    // Ask the player which character they want to use
     let userInput = prompt("Choose your fighter: Bear, Ninja, or Hunter");
     if (!userInput) {
-      alert("No input received. Game ending.");
+      alert("No choice made. Game will end.");
       break;
     }
 
-    // Force case to lowercase
+    // Change the player’s choice to lowercase so it works no matter how they typed it
     let playerChoice = userInput.trim().toLowerCase();
 
-    // Validate input using array
+    // Check if the choice is one of the valid options
     if (!gameChoices.includes(playerChoice)) {
-      alert("Invalid choice: '" + playerChoice + "'. Please choose Bear, Ninja, or Hunter.");
+      alert("That's not a valid choice! Please choose Bear, Ninja, or Hunter.");
       break;
     }
 
-    // Randomize computer's choice using length property
+    // The computer randomly picks one of the characters
     let randomIndex = Math.floor(Math.random() * gameChoices.length);
     let computerChoice = gameChoices[randomIndex];
 
-    // Determine winner using if/else and switch
+    // Decide who won the game
     let resultMessage = "";
 
     if (playerChoice === computerChoice) {
@@ -92,18 +95,18 @@
       }
     }
 
-    // Concatenate output using 2 methods: innerHTML & console
+    // Make a message with all the results
     let displayMessage = 
 `Hello ${playerName}!
 You chose: ${playerChoice} ${emojiMap[playerChoice]}
 Computer chose: ${computerChoice} ${emojiMap[computerChoice]}
 ${resultMessage}`;
 
-    // Output results
+    // Show the message on the screen and also in the developer console
     document.getElementById("output").innerHTML = displayMessage.replace(/\n/g, "<br>");
     console.log(displayMessage);
 
-    // Ask to replay
+    // Ask if the player wants to play again
     let playAgain = prompt("Would you like to play again? (yes/no)");
     if (!playAgain || playAgain.toLowerCase() !== "yes") {
       alert(`Thanks for playing, ${playerName}! 👋`);
