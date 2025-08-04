@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>Bear Ninja Hunter Game</title>
+  <meta name="author" content="Quinn Archibald">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f4f8;
+      background-color: #eef2f5;
       padding: 20px;
-      color: #222;
+      color: #333;
     }
 
     h1 {
       text-align: center;
-      color: #3a3a3a;
+      color: #444;
     }
 
-    #demo {
+    #output {
       margin-top: 30px;
       padding: 20px;
-      background-color: #ffffff;
+      background-color: #fff;
       border: 2px solid #ccc;
       border-radius: 8px;
       font-size: 1.2rem;
@@ -30,69 +31,83 @@
 <body>
 
 <h1>Bear Ninja Hunter</h1>
-<p id="demo">Let’s play!</p>
+<p id="output">Let's play!</p>
 
 <script>
-  const choices = ["bear", "ninja", "hunter"];
-  const symbols = {
+  // DECLARE ALL VARIABLES AT TOP
+  const gameChoices = ["bear", "ninja", "hunter"]; // Immutable array of choices
+  const emojiMap = {
     bear: "🐻",
     ninja: "🥷",
     hunter: "🧑‍🌾"
   };
 
-  let playAgain = true;
+  let playGame = true; // Loop control
 
-  while (playAgain) {
-    let userName = prompt("Welcome to Bear Ninja Hunter! What's your name?");
-    if (!userName) {
-      alert("Game cancelled. Name is required.");
+  // MAIN GAME LOOP
+  while (playGame) {
+    // Get player name
+    let playerName = prompt("Welcome to Bear Ninja Hunter! What's your name?");
+    if (!playerName) {
+      alert("Game cancelled. You must enter a name.");
       break;
     }
 
+    // Ask user to pick a fighter
     let userInput = prompt("Choose your fighter: Bear, Ninja, or Hunter");
     if (!userInput) {
-      alert("No input received. Ending game.");
+      alert("No input received. Game ending.");
       break;
     }
 
+    // Force case to lowercase
     let playerChoice = userInput.trim().toLowerCase();
-    if (!choices.includes(playerChoice)) {
-      alert("Invalid choice: " + playerChoice);
+
+    // Validate input using array
+    if (!gameChoices.includes(playerChoice)) {
+      alert("Invalid choice: '" + playerChoice + "'. Please choose Bear, Ninja, or Hunter.");
       break;
     }
 
-    let computerChoice = choices[Math.floor(Math.random() * choices.length)];
+    // Randomize computer's choice using length property
+    let randomIndex = Math.floor(Math.random() * gameChoices.length);
+    let computerChoice = gameChoices[randomIndex];
 
-    let winnerMessage = "";
+    // Determine winner using if/else and switch
+    let resultMessage = "";
+
     if (playerChoice === computerChoice) {
-      winnerMessage = "It's a tie!";
-    } else if (
-      (playerChoice === "bear" && computerChoice === "ninja") ||
-      (playerChoice === "ninja" && computerChoice === "hunter") ||
-      (playerChoice === "hunter" && computerChoice === "bear")
-    ) {
-      winnerMessage = `🎉 ${userName}, you win!`;
+      resultMessage = "It's a tie!";
     } else {
-      winnerMessage = "💻 Computer wins!";
+      switch (playerChoice) {
+        case "bear":
+          resultMessage = computerChoice === "ninja" ? `🎉 ${playerName}, you win!` : "💻 Computer wins!";
+          break;
+        case "ninja":
+          resultMessage = computerChoice === "hunter" ? `🎉 ${playerName}, you win!` : "💻 Computer wins!";
+          break;
+        case "hunter":
+          resultMessage = computerChoice === "bear" ? `🎉 ${playerName}, you win!` : "💻 Computer wins!";
+          break;
+      }
     }
 
-    // Build multi-line message
-    let finalMessage = `
-Hello ${userName}!
-You chose: ${playerChoice} ${symbols[playerChoice]}
-Computer chose: ${computerChoice} ${symbols[computerChoice]}
-${winnerMessage}
-`;
+    // Concatenate output using 2 methods: innerHTML & console
+    let displayMessage = 
+`Hello ${playerName}!
+You chose: ${playerChoice} ${emojiMap[playerChoice]}
+Computer chose: ${computerChoice} ${emojiMap[computerChoice]}
+${resultMessage}`;
 
-    // Display in HTML and console
-    document.getElementById("demo").innerHTML = finalMessage.replace(/\n/g, "<br>");
-    console.log(finalMessage);
-    alert(finalMessage);
+    // Output results
+    document.getElementById("output").innerHTML = displayMessage.replace(/\n/g, "<br>");
+    console.log(displayMessage);
 
-    let again = prompt("Play again? (yes/no)");
-    if (!again || again.toLowerCase() !== "yes") {
-      alert(`Thanks for playing, ${userName}! 👋`);
-      playAgain = false;
+    // Ask to replay
+    let playAgain = prompt("Would you like to play again? (yes/no)");
+    if (!playAgain || playAgain.toLowerCase() !== "yes") {
+      alert(`Thanks for playing, ${playerName}! 👋`);
+      playGame = false;
     }
   }
 </script>
