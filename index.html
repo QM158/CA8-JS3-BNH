@@ -7,20 +7,20 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #eef2f5;
+      background-color: #f0f4f8;
       padding: 20px;
-      color: #333;
+      color: #222;
     }
 
     h1 {
       text-align: center;
-      color: #444;
+      color: #3a3a3a;
     }
 
     #output {
       margin-top: 30px;
       padding: 20px;
-      background-color: #fff;
+      background-color: #ffffff;
       border: 2px solid #ccc;
       border-radius: 8px;
       font-size: 1.2rem;
@@ -34,86 +34,68 @@
 <p id="output">Let's play!</p>
 
 <script>
-  // These are the three characters you can choose
-  const gameChoices = ["bear", "ninja", "hunter"];
-
-  // These are the pictures (emojis) for each character
-  const emojiMap = {
+  // Set up the choices and emojis
+  const choices = ["bear", "ninja", "hunter"];
+  const emojis = {
     bear: "🐻",
     ninja: "🥷",
     hunter: "🧑‍🌾"
   };
 
-  // This keeps the game going until you choose to stop
-  let playGame = true;
+  // Start the game loop
+  let keepPlaying = true;
 
-  // This is the main part of the game
-  while (playGame) {
-    // Ask the player for their name
+  while (keepPlaying) {
+    // Ask for player's name
     let playerName = prompt("Welcome to Bear Ninja Hunter! What's your name?");
-    if (!playerName) {
-      alert("You need to enter a name to play.");
+    if (playerName === null || playerName.trim() === "") {
+      alert("You must enter a name to play. Please refresh the page to try again.");
       break;
     }
 
-    // Ask the player which character they want to use
-    let userInput = prompt("Choose your fighter: Bear, Ninja, or Hunter");
-    if (!userInput) {
-      alert("No choice made. Game will end.");
+    // Greet the player
+    alert("Hello " + playerName + "! Let's begin.");
+
+    // Ask for player's choice
+    let playerInput = prompt("Choose your fighter: Bear, Ninja, or Hunter");
+    if (playerInput === null || playerInput.trim() === "") {
+      alert("You didn't choose a fighter. Please refresh the page to try again.");
       break;
     }
 
-    // Change the player’s choice to lowercase so it works no matter how they typed it
-    let playerChoice = userInput.trim().toLowerCase();
+    // Clean and standardize input
+    let playerChoice = playerInput.trim().toLowerCase();
 
-    // Check if the choice is one of the valid options
-    if (!gameChoices.includes(playerChoice)) {
-      alert("That's not a valid choice! Please choose Bear, Ninja, or Hunter.");
-      break;
-    }
-
-    // The computer randomly picks one of the characters
-    let randomIndex = Math.floor(Math.random() * gameChoices.length);
-    let computerChoice = gameChoices[randomIndex];
-
-    // Decide who won the game
-    let resultMessage = "";
-
-    if (playerChoice === computerChoice) {
-      resultMessage = "It's a tie!";
-    } else {
-      switch (playerChoice) {
-        case "bear":
-          resultMessage = computerChoice === "ninja" ? `🎉 ${playerName}, you win!` : "💻 Computer wins!";
-          break;
-        case "ninja":
-          resultMessage = computerChoice === "hunter" ? `🎉 ${playerName}, you win!` : "💻 Computer wins!";
-          break;
-        case "hunter":
-          resultMessage = computerChoice === "bear" ? `🎉 ${playerName}, you win!` : "💻 Computer wins!";
-          break;
+    // Use a for loop to check if the choice is valid
+    let isValid = false;
+    for (let i = 0; i < choices.length; i++) {
+      if (playerChoice === choices[i]) {
+        isValid = true;
+        break;
       }
     }
 
-    // Make a message with all the results
-    let displayMessage = 
-`Hello ${playerName}!
-You chose: ${playerChoice} ${emojiMap[playerChoice]}
-Computer chose: ${computerChoice} ${emojiMap[computerChoice]}
-${resultMessage}`;
-
-    // Show the message on the screen and also in the developer console
-    document.getElementById("output").innerHTML = displayMessage.replace(/\n/g, "<br>");
-    console.log(displayMessage);
-
-    // Ask if the player wants to play again
-    let playAgain = prompt("Would you like to play again? (yes/no)");
-    if (!playAgain || playAgain.toLowerCase() !== "yes") {
-      alert(`Thanks for playing, ${playerName}! 👋`);
-      playGame = false;
+    // If the choice is not valid, show error and exit
+    if (!isValid) {
+      alert("Invalid choice: '" + playerInput + "'. Please refresh the page and choose Bear, Ninja, or Hunter.");
+      break;
     }
-  }
-</script>
 
-</body>
-</html>
+    // Random computer choice using array length
+    let computerIndex = Math.floor(Math.random() * choices.length);
+    let computerChoice = choices[computerIndex];
+
+    // Decide who wins
+    let result = "";
+    if (playerChoice === computerChoice) {
+      result = "It's a tie!";
+    } else if (
+      (playerChoice === "bear" && computerChoice === "ninja") ||
+      (playerChoice === "ninja" && computerChoice === "hunter") ||
+      (playerChoice === "hunter" && computerChoice === "bear")
+    ) {
+      result = "🎉 " + playerName + ", you win!";
+    } else {
+      result = "💻 Computer wins!";
+    }
+
