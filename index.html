@@ -77,25 +77,27 @@
 
     // If the choice is not valid, show error and exit
     if (!isValid) {
-      alert("Invalid choice: '" + playerInput + "'. Please refresh the page and choose Bear, Ninja, or Hunter.");
-      break;
-    }
-
-    // Random computer choice using array length
-    let computerIndex = Math.floor(Math.random() * choices.length);
-    let computerChoice = choices[computerIndex];
-
-    // Decide who wins
-    let result = "";
-    if (playerChoice === computerChoice) {
-      result = "It's a tie!";
-    } else if (
-      (playerChoice === "bear" && computerChoice === "ninja") ||
-      (playerChoice === "ninja" && computerChoice === "hunter") ||
-      (playerChoice === "hunter" && computerChoice === "bear")
-    ) {
-      result = "🎉 " + playerName + ", you win!";
+      alert("Invalid choice: '" + playerInput + "'. ");
     } else {
-      result = "💻 Computer wins!";
+      // Random computer choice using array length
+      let computerIndex = Math.floor(Math.random() * choices.length);
+      let computerChoice = choices[computerIndex];
+  
+      // Decide who wins
+      let result = "";
+      if (playerChoice === computerChoice) {
+        result = "It's a tie!";
+      } else if (
+        (playerChoice === "bear" && computerChoice === "ninja") ||
+        (playerChoice === "ninja" && computerChoice === "hunter") ||
+        (playerChoice === "hunter" && computerChoice === "bear")
+      ) {
+        result = "🎉 " + playerName + ", you win!";
+      } else {
+        result = "💻 Computer wins!";
+      }
     }
+    </script>
+</body>
+</html>
 
